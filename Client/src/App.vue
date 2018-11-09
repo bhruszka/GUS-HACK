@@ -1,29 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <nav class="level main-nav is-size-4 has-text-primary has-text-weight-bold">
+        <p class="level-item has-text-centered">
+          9GUS
+        </p>
+      </nav>
+    <div class="container">
+      <router-view />
     </div>
-    <router-view/>
   </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.main-nav {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 </style>

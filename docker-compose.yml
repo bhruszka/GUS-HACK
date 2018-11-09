@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  server:
+    build: ./Server
+    command: /bin/bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./Server:/authsite
+
+  client:
+    build: ./Client
+    command: yarn serve
+    volumes:
+      - ./Client:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  nginx:
+    image: nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./Nginx/conf.d:/etc/nginx/conf.d
+    depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
+      - server
+      - client

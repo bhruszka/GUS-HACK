@@ -1,0 +1,7 @@
+FROM python:3.6
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /authsite
+WORKDIR /authsite
+ADD requirements.txt /authsite/
+EXPOSE 8000
+RUN pip install -r requirements.txt

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'core',
     'sdg_api',
     'rest_framework',
     'rest_framework_swagger',
@@ -170,3 +171,5 @@ REST_FRAMEWORK = {
 SHELL_PLUS_SUBCLASSES_IMPORT = [
     'sdg_api.api.SdgApi',
 ]
+
+AUTH_USER_MODEL = 'core.CustomUser'

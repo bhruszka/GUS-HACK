@@ -1,13 +1,9 @@
-FROM node:8-alpine
-
-RUN apk add --no-cache yarn
-RUN yarn global add @vue/cli
+FROM node:8-jessie
 
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json /app/package.json
-COPY yarn.lock /app/yarn.lock 
-RUN yarn install
+COPY . /app
+RUN npm install
 
 EXPOSE 8080

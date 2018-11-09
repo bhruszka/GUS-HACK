@@ -4,13 +4,17 @@ services:
 
   server:
     build: ./Server
-    command: /bin/bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "9000:9000"
+    command: /bin/bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:9000"
     volumes:
       - ./Server:/authsite
 
   client:
     build: ./Client
     command: yarn serve
+    ports:
+      - "8080:8080"
     volumes:
       - ./Client/src:/app/src
     environment:
@@ -19,9 +23,10 @@ services:
   nginx:
     image: nginx
     ports:
-      - "8000:80"
+      - "80:80"
     volumes:
       - ./Nginx/conf.d:/etc/nginx/conf.d
+    network_mode: host
     depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
       - server
       - client

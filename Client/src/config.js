@@ -1,3 +1,3 @@
 export default {
-  apiUrl: "http://gusapp.com",
+  apiUrl: "http://68.183.65.209/",
 };

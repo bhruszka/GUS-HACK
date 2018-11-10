@@ -17,6 +17,7 @@ class Command(BaseCommand):
         Series.objects.all().delete()
 
         for i, series in enumerate(series_list):
+            logger.debug('{}/{}'.format(i+1, len(series_list)))
             series_model_list.append(Series(
                 goal=series['goal'][0],
                 target=series['target'][0],
@@ -25,7 +26,6 @@ class Command(BaseCommand):
                 description=series['description'],
                 uri=series['uri'],
             ))
-            logger.debug('{}/{}'.format(i+1, len(series_list)))
 
         Series.objects.bulk_create(series_model_list)
 

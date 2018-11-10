@@ -1,9 +1,21 @@
 <template>
   <div id="app">
-    <nav class="level main-nav is-size-4 has-text-primary has-text-weight-bold">
-      <p class="level-item has-text-centered">
+    <nav class="level main-nav">
+      <div class="level-item "></div>
+
+      <p class="level-item has-text-centered is-size-4 has-text-primary has-text-weight-bold">
         9GUS
       </p>
+      <div class="level-item" v-if="user != null">
+        <p>
+          {{user}}
+        </p>
+        <a class="button log-out-button" :href="logoutUrl">LOG OUT</a>
+      </div>
+      <div class="level-item" v-else>
+        <a class="button log-in-button" :href="loginUrl">LOG IN</a>
+        <a class="button sign-up-button is-danger has-text-weight-bold" :href="signupUrl">SIGN UP</a>
+      </div>
     </nav>
     <section class="hero is-primary main-hero">
       <div class="hero-body">
@@ -22,6 +34,38 @@
     </div>
   </div>
 </template>
+<script>
+import axios from "axios";
+import config from "./config.js";
+
+export default {
+  data() {
+    return {
+      user: null,
+      loginUrl: "/accounts/login",
+      logoutUrl: "/accounts/logout",
+      signupUrl: "/accounts/signup",
+    };
+  },
+  computed: {
+    apiUrl: function() { return config.apiUrl },
+  },
+  mounted: function() {
+    let self = this;
+    axios
+      .get(`${this.apiUrl}/accounts/me`)
+      .then(function(response) {
+        console.log(response.data);
+        self.user = response.data.username;
+      })
+      .catch(function(error) {
+        console.log(error);
+        self.user = null;
+      });
+  }
+};
+</script>
+
 
 <style lang="scss">
 .main-nav {
@@ -32,5 +76,13 @@
 
 .main-hero {
   margin-bottom: 16px;
+}
+
+.log-out-button {
+  margin-left: 16px;
+}
+
+.sign-up-button {
+  margin-left: 16px;
 }
 </style>

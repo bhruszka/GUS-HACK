@@ -25,7 +25,7 @@ SECRET_KEY = 'tjjs5hf1r)5lbjj%u^5@vqgxc!s@v4t$#%q&0344t9n881^=5d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gusapp.com']
 
 
 # Application definition
@@ -173,3 +173,6 @@ SHELL_PLUS_SUBCLASSES_IMPORT = [
 ]
 
 AUTH_USER_MODEL = 'core.CustomUser'
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"

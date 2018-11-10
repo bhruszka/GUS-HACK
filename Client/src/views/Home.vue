@@ -51,8 +51,7 @@
     <div class="container facts-container">
       <Fact v-for="fact in facts" :fact="fact" v-bind:key="fact.content" />
       <nav class="pagination is-right" role="navigation" aria-label="pagination">
-        <a class="pagination-previous">Previous</a>
-        <a class="pagination-next">Next page</a>
+
         <ul class="pagination-list">
           <li v-if="page != 1"><a class="pagination-link" aria-label="Goto page 1" @click="page = 1">1</a></li>
           <li v-if="page - 2 > 1"><span class="pagination-ellipsis">&hellip;</span></li>

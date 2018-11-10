@@ -23,6 +23,7 @@ class Command(BaseCommand):
                 indicator=pivot_data['indicator'],
                 source=pivot_data['source'],
                 data=pivot_data['years'],
+                series=pivot_data['series'],
             ))
             logger.debug('{}/{}'.format(i+1, len(target_pivot_data_list)))
 

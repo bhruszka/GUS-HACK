@@ -1,5 +1,5 @@
 <template>
-    <article class="fact-container media ">
+    <article class="fact-container media standard-padding">
         <div class="media-left">
             <figure class="image is-128x128">
                 <img :src="categoryImage" class="category-image" alt="image">

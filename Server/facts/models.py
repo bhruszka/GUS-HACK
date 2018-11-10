@@ -4,7 +4,7 @@ import json
 from core.models import CommonModel
 from django.db import models
 
-from facts.utils import find
+from facts.utils import find, lowerize_first_word
 from sdg_api.models import Target, Series
 
 
@@ -62,7 +62,7 @@ class Fact(CommonModel):
                                        'to {new_value} in {new_year}.'
 
             content = new_old_content_template.format(
-                fact_description=self.series_model.description,
+                fact_description=lowerize_first_word(self.series_model.description),
 
                 old_value=oldest_data['value'],
                 old_year=self.oldest_year,
@@ -71,12 +71,13 @@ class Fact(CommonModel):
                 new_year=self.newest_year,
             )
         else:
-            one_point_content_template = 'The UN aims to {target}. In {year}, Poland has achieved {value}'
+            one_point_content_template = 'The UN aims to {target}. In {year}, Poland has achieved {value} ({series}).'
 
             content = one_point_content_template.format(
-                target=self.target_model.title,
+                target=lowerize_first_word(self.target_model.title),
                 year=self.newest_year,
                 value=newest_data['value'],
+                series=lowerize_first_word(self.series_model.description),
             )
 
         return content

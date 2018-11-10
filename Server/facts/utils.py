@@ -87,3 +87,13 @@ def find(seq, f):
     for item in seq:
         if f(item):
             return item
+
+
+def lowerize_first_word(s):
+    split_words = s.split(' ', 1)
+
+    if split_words[0].istitle():
+        return ' '.join([split_words[0].lower()] + split_words[1:])
+    else:
+        return s
+

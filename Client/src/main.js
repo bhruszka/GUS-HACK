@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
 import 'bulma'
+import './facebook.js'
 
 Vue.config.productionTip = false
 

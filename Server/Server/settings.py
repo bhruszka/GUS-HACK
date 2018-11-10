@@ -25,7 +25,7 @@ SECRET_KEY = 'tjjs5hf1r)5lbjj%u^5@vqgxc!s@v4t$#%q&0344t9n881^=5d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gusapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['gusapp.com']
 INSTALLED_APPS = [
     'core',
     'sdg_api',
+    'facts',
     'rest_framework',
     'rest_framework_swagger',
     'django_extensions',
@@ -152,6 +153,7 @@ LOGGING = {
         'sdg_api': APP_LOG_SETUP,
         'Server': APP_LOG_SETUP,
         'core': APP_LOG_SETUP,
+        'facts': APP_LOG_SETUP,
     },
 }
 

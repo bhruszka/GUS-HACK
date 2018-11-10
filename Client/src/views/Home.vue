@@ -23,7 +23,7 @@
               <div class="buttons has-addons is-centered">
                 <span class="button"><i class="mdi mdi-24px mdi-heart"></i></span>
                 <span class="button"><i class="mdi mdi-24px mdi-emoticon-sad"></i></span>
-                <span class="button is-success is-selected"><i class="mdi mdi-24px mdi-alert"></i></span>
+                <span class="button"><i class="mdi mdi-24px mdi-alert"></i></span>
                 <span class="button"><i class="mdi mdi-24px mdi-school"></i></span>
               </div>
             </div>
@@ -50,6 +50,19 @@
     </section>
     <div class="container facts-container">
       <Fact v-for="fact in facts" :fact="fact" v-bind:key="fact.content" />
+      <nav class="pagination is-right" role="navigation" aria-label="pagination">
+        <a class="pagination-previous">Previous</a>
+        <a class="pagination-next">Next page</a>
+        <ul class="pagination-list">
+          <li v-if="page != 1"><a class="pagination-link" aria-label="Goto page 1" @click="page = 1">1</a></li>
+          <li v-if="page - 2 > 1"><span class="pagination-ellipsis">&hellip;</span></li>
+          <li v-if="page - 1 > 1"><a class="pagination-link" :aria-label="'Goto page ' + (page - 1)" @click="page = page -1">{{page - 1}}</a></li>
+          <li><a class="pagination-link is-current" :aria-label="'Page ' + page" aria-current="page">{{page}}</a></li>
+          <li v-if="page + 1 < totalPages"><a class="pagination-link" :aria-label="'Goto page ' + (page + 1)" @click="page = page + 1">{{page + 1}}</a></li>
+          <li v-if="page + 2 < totalPages"><span class="pagination-ellipsis">&hellip;</span></li>
+          <li v-if="page != totalPages"><a class="pagination-link" :aria-label="'Goto page' + totalPages" @click="page = totalPages">{{totalPages}}</a></li>
+        </ul>
+      </nav>
     </div>
   </div>
 </template>
@@ -72,7 +85,9 @@ export default {
       categories: Array.from(new Array(17), (x, i) => ({ id: i })),
       filterCategorie: null,
       facts: [],
-      type: "All"
+      type: "All",
+      page: 1,
+      totalPages: 1
     };
   },
   computed: {
@@ -82,9 +97,14 @@ export default {
   },
   watch: {
     filterCategorie: function(old_value, new_value) {
+      this.page = 1;
       this.getFacts();
     },
     type: function(old_value, new_value) {
+      this.page = 1;
+      this.getFacts();
+    },
+    page: function(old_value, new_value) {
       this.getFacts();
     }
   },
@@ -112,7 +132,8 @@ export default {
 
       let params = {
         params: {
-          page: 1
+          page: this.page,
+          page_size: 20
         }
       };
       if (this.filterCategorie != null) {
@@ -130,6 +151,8 @@ export default {
         .then(function(response) {
           console.log(response.data);
           self.facts = response.data.results;
+          self.totalPages = response.data.total_pages;
+          window.scrollTo(0, 0);
         })
         .catch(function(error) {
           console.log("facts");

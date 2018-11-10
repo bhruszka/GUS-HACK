@@ -16,14 +16,22 @@
                 <nav class="level">
                     <div class="level-left">
                         <a class="level-item">
-                            <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                            <span class="icon"><i class="mdi mdi-24px mdi-heart"></i></span>
                         </a>
                         <a class="level-item">
-                            <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                            <span class="icon"><i class="mdi mdi-24px mdi-emoticon-sad"></i></span>
                         </a>
                         <a class="level-item">
-                            <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                            <span class="icon"><i class="mdi mdi-24px mdi-alert"></i></span>
                         </a>
+                        <a class="level-item">
+                            <span class="icon"><i class="mdi mdi-24px mdi-school"></i></span>
+                        </a>
+                    </div>
+                    <div class="level-right">
+                        <div class="fb-share-button" data-href="https://www.your-domain.com/your-page.html" data-layout="button_count">
+                        </div>
+
                     </div>
                 </nav>
             </div>

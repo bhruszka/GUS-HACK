@@ -73,10 +73,10 @@ class Command(BaseCommand):
                 fact_type=fact_type,
                 custom_order=order[i],
 
-                love=random.randint(0, 100),
-                sad=random.randint(0, 100),
-                alert=random.randint(0, 100),
-                edu=random.randint(0, 100),
+                love=random.randint(0, 1000),
+                sad=random.randint(0, 1000),
+                alert=random.randint(0, 1000),
+                edu=random.randint(0, 1000),
             ))
 
         Fact.objects.bulk_create(fact_model_list)

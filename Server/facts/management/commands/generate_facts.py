@@ -59,6 +59,7 @@ class Command(BaseCommand):
                 series=target_pivot_data.series,
                 source=target_pivot_data.source,
                 data=json.dumps(data_with_value),
+                sex=target_pivot_data.sex,
 
                 min_year=min_val['year'],
                 max_year=max_val['year'],

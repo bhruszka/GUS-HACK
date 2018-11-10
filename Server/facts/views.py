@@ -7,6 +7,7 @@ import django_filters.rest_framework
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.filters import OrderingFilter
 
 from facts.models import Fact
 from facts.serializers import FactSerializer
@@ -17,7 +18,7 @@ class FactViewSet(viewsets.ReadOnlyModelViewSet):
     This viewset automatically provides `list` and `detail` actions.
     """
     permission_classes = (permissions.AllowAny,)
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, OrderingFilter)
     filter_fields = ('goal', 'fact_type')
     queryset = Fact.objects.all()
     serializer_class = FactSerializer

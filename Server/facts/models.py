@@ -15,6 +15,7 @@ class Fact(CommonModel):
     series = models.CharField(max_length=300)
     source = models.TextField()
     data = models.TextField()
+    sex = models.CharField(max_length=10, null=True)
 
     min_year = models.IntegerField(null=True)
     max_year = models.IntegerField(null=True)
@@ -57,21 +58,26 @@ class Fact(CommonModel):
         content = ''
 
         if self.fact_type == 'new_old':
-            new_old_content_template = 'The {fact_description} in Poland has changed from {old_value} in {old_year}' \
-                                       'to {new_value} in {new_year}.'
+            new_old_content_template = 'The {fact_description} in Poland has changed from {old_value} in {old_year} ' \
+                                       'to {new_value} in {new_year} ({series}).'
 
             content = new_old_content_template.format(
                 fact_description=lowerize_first_word(self.series_model.description),
-
                 old_value=oldest_data['value'], old_year=self.oldest_year,
-
-                new_value=newest_data['value'], new_year=self.newest_year, )
+                new_value=newest_data['value'], new_year=self.newest_year,
+                series=lowerize_first_word(self.series_model.description),
+            )
         else:
             one_point_content_template = 'The UN aims to {target}. In {year}, Poland has achieved {value} ({series}).'
 
-            content = one_point_content_template.format(target=lowerize_first_word(self.target_model.title),
+            content = one_point_content_template.format(
+                target=lowerize_first_word(self.target_model.title),
                 year=self.newest_year, value=newest_data['value'],
-                series=lowerize_first_word(self.series_model.description), )
+                series=lowerize_first_word(self.series_model.description),
+            )
+
+        if self.sex:
+            content += ' This data concerns {}.'.format(self.sex)
 
         return content
 

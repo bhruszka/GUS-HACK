@@ -170,6 +170,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'facts.utils.PaginationWithPageCount',
     'PAGE_SIZE': 20,
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'ORDERING_PARAM': 'order_by',
 }
 
 SHELL_PLUS_SUBCLASSES_IMPORT = [

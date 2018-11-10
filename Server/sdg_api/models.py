@@ -37,3 +37,4 @@ class TargetPivotData(CommonModel):
     series = models.CharField(max_length=300)
     source = models.TextField()
     data = models.TextField()
+    sex = models.CharField(max_length=10, null=True)

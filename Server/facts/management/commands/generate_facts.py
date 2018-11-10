@@ -1,5 +1,6 @@
 import json
 import logging
+import random
 
 from django.core.management import BaseCommand
 
@@ -26,7 +27,9 @@ class Command(BaseCommand):
 
         fact_model_list = []
 
-        for target_pivot_data in TargetPivotData.objects.all():
+        order = random.sample(range(1, TargetPivotData.objects.count() + 1), TargetPivotData.objects.count())
+
+        for i, target_pivot_data in enumerate(TargetPivotData.objects.all()):
             # target = Target.objects.
             data = json.loads(target_pivot_data.data)
             data_with_value = [d for d in data if pivot_data_get_value(d) != '']
@@ -67,6 +70,7 @@ class Command(BaseCommand):
                 unit_parsed=unit_parser(unit),
 
                 fact_type=fact_type,
+                custom_order=order[i],
             ))
 
         Fact.objects.bulk_create(fact_model_list)

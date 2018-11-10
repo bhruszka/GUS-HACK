@@ -12,4 +12,4 @@ class FactSerializer(serializers.ModelSerializer):
             'data', 'min_year', 'max_year', 'oldest_year', 'newest_year',
             'unit', 'unit_parsed', 'content', 'fact_type',
         )
-        ordering = ('indicator',)
+        ordering = ('custom_order',)

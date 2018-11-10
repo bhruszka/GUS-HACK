@@ -4,6 +4,7 @@ from collections import OrderedDict
 
 
 class PaginationWithPageCount(pagination.PageNumberPagination):
+    page_size_query_param = 'page_size'
 
     def get_paginated_response(self, data):
         return Response(OrderedDict((

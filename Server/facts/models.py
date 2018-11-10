@@ -25,6 +25,8 @@ class Fact(CommonModel):
     unit = models.CharField(max_length=300, default='')
     unit_parsed = models.CharField(max_length=300, default='')
 
+    custom_order = models.IntegerField(null=True)
+
     FACT_TYPES = (
         ('new_old', 'new_old'),
         ('one_point', 'one_point'),

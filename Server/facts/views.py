@@ -18,7 +18,7 @@ class FactViewSet(viewsets.ReadOnlyModelViewSet):
     """
     permission_classes = (permissions.AllowAny,)
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
-    filter_fields = ('goal',)
+    filter_fields = ('goal', 'fact_type')
     queryset = Fact.objects.all()
     serializer_class = FactSerializer
 

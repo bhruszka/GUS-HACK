@@ -10,6 +10,6 @@ class FactSerializer(serializers.ModelSerializer):
             'id',
             'goal', 'target', 'indicator', 'series', 'source',
             'data', 'min_year', 'max_year', 'oldest_year', 'newest_year',
-            'unit', 'unit_parsed', 'content',
+            'unit', 'unit_parsed', 'content', 'fact_type',
         )
         ordering = ('indicator',)

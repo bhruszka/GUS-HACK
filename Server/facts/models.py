@@ -25,9 +25,16 @@ class Fact(CommonModel):
     unit = models.CharField(max_length=300, default='')
     unit_parsed = models.CharField(max_length=300, default='')
 
+    FACT_TYPES = (
+        ('new_old', 'new_old'),
+        ('one_point', 'one_point'),
+    )
+
+    fact_type = models.CharField(max_length=10, choices=FACT_TYPES, default='one_point')
+
     @property
     def target_model(self):
-        return Target.objects.get(target=self.target)
+        return Target.objects.get(code=self.target)
 
     @property
     def series_model(self):
@@ -43,20 +50,33 @@ class Fact(CommonModel):
 
     @property
     def content(self):
-        content_template = 'The {fact_description} in Poland has changed from {old_value} in {old_year} to ' \
-                           '{new_value} in {new_year}.'
-
         data = self.data_json
 
         oldest_data = self.get_year_value(self.oldest_year, data=data)
         newest_data = self.get_year_value(self.newest_year, data=data)
 
-        return content_template.format(
-            fact_description=self.series_model.description,
+        content = ''
 
-            old_value=oldest_data['value'],
-            old_year=self.oldest_year,
+        if self.fact_type == 'new_old':
+            new_old_content_template = 'The {fact_description} in Poland has changed from {old_value} in {old_year}' \
+                                       'to {new_value} in {new_year}.'
 
-            new_value=newest_data['value'],
-            new_year=self.newest_year,
-        )
+            content = new_old_content_template.format(
+                fact_description=self.series_model.description,
+
+                old_value=oldest_data['value'],
+                old_year=self.oldest_year,
+
+                new_value=newest_data['value'],
+                new_year=self.newest_year,
+            )
+        else:
+            one_point_content_template = 'The UN aims to {target}. In {year}, Poland has achieved {value}'
+
+            content = one_point_content_template.format(
+                target=self.target_model.title,
+                year=self.newest_year,
+                value=newest_data['value'],
+            )
+
+        return content

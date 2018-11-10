@@ -43,6 +43,12 @@ class Command(BaseCommand):
             unit = newest_val['Units']
             units.add(unit)
 
+            fact_type = ''
+            if oldest_val != newest_val:
+                fact_type = 'new_old'
+            else:
+                fact_type = 'one_point'
+
             fact_model_list.append(Fact(
                 goal=target_pivot_data.goal,
                 target=target_pivot_data.target,
@@ -59,6 +65,8 @@ class Command(BaseCommand):
 
                 unit=unit,
                 unit_parsed=unit_parser(unit),
+
+                fact_type=fact_type,
             ))
 
         Fact.objects.bulk_create(fact_model_list)

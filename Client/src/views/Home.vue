@@ -16,15 +16,15 @@
           <div class="sort-container">
             <div class="level">
               <div class="level-item ">
-                <h2 class="subtitle has-text-right has-text-white is-size-4">SORT BY</h2>
+                <p class="subtitle has-text-right has-text-white is-size-4">SORT BY <i v-if="sort != null" class="mdi mdi-24px mdi-close has-text-danger" @click="sort = null"></i></p>
               </div>
             </div>
             <div style="width: 100%">
               <div class="buttons has-addons is-centered">
-                <span class="button"><i class="mdi mdi-24px mdi-heart"></i></span>
-                <span class="button"><i class="mdi mdi-24px mdi-emoticon-sad"></i></span>
-                <span class="button"><i class="mdi mdi-24px mdi-alert"></i></span>
-                <span class="button"><i class="mdi mdi-24px mdi-school"></i></span>
+                <span class="button" @click="sort='love'" v-bind:class="{'is-danger is-selected': sort=='love'}"><i class="mdi mdi-24px mdi-heart"></i></span>
+                <span class="button" @click="sort='sad'" v-bind:class="{'is-success is-selected': sort=='sad'}"><i class="mdi mdi-24px mdi-emoticon-sad"></i></span>
+                <span class="button" @click="sort='alert'" v-bind:class="{'is-warning is-selected': sort=='alert'}"><i class="mdi mdi-24px mdi-alert"></i></span>
+                <span class="button" @click="sort='edu'" v-bind:class="{'is-info is-selected': sort=='edu'}"><i class="mdi mdi-24px mdi-school"></i></span>
               </div>
             </div>
 
@@ -87,7 +87,8 @@ export default {
       facts: [],
       type: "All",
       page: 1,
-      totalPages: 1
+      totalPages: 1,
+      sort: null
     };
   },
   computed: {
@@ -105,6 +106,10 @@ export default {
       this.getFacts();
     },
     page: function(old_value, new_value) {
+      this.getFacts();
+    },
+    sort: function(old_value, new_value) {
+      this.page = 1;
       this.getFacts();
     }
   },
@@ -139,6 +144,11 @@ export default {
       if (this.filterCategorie != null) {
         params.params.goal = this.filterCategorie + 1;
       }
+
+      if(this.sort != null) {
+        params.params.order_by = '-' + this.sort;
+      }
+
       if (this.type != "All") {
         if (this.type == "One data point") {
           params.params.fact_type = "one_point";

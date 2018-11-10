@@ -14,20 +14,22 @@
                     <small> [{{fact.unit_parsed}}]</small>
                     <br>
                     {{fact.content}}
+                    <br/>
+                    <small style="font-size: 0.85rem">Source: {{fact.source}}</small>
                 </p>
                 <nav class="level">
                     <div class="level-left">
                         <a class="level-item has-text-danger">
-                            <span class="icon"><i class="mdi mdi-24px mdi-heart"></i></span>
+                            {{fact.love}} <span class="icon"><i class="mdi mdi-24px mdi-heart"></i></span>
                         </a>
                         <a class="level-item has-text-success">
-                            <span class="icon"><i class="mdi mdi-24px mdi-emoticon-sad"></i></span>
+                            {{fact.sad}} <span class="icon"><i class="mdi mdi-24px mdi-emoticon-sad"></i></span>
                         </a>
                         <a class="level-item has-text-warning">
-                            <span class="icon"><i class="mdi mdi-24px mdi-alert"></i></span>
+                            {{fact.alert}} <span class="icon"><i class="mdi mdi-24px mdi-alert"></i></span>
                         </a>
-                        <a class="level-item">
-                            <span class="icon"><i class="mdi mdi-24px mdi-school"></i></span>
+                        <a class="level-item has-text-info">
+                            {{fact.edu}} <span class="icon"><i class="mdi mdi-24px mdi-school"></i></span>
                         </a>
                     </div>
                     <div class="level-right has-text-link">

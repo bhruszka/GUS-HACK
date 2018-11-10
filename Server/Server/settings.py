@@ -166,7 +166,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DATETIME_FORMAT': "%Y-%m-%d %H:%M",
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS': 'facts.utils.PaginationWithPageCount',
     'PAGE_SIZE': 20
 }
 

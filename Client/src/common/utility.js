@@ -1,3 +1,3 @@
 export function getImageUrl(id){
-    return require(`../assets/${id}.png`)
+    return (`https://castdeo.ams3.digitaloceanspaces.com/${id}.png`)
 }

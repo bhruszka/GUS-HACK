@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'username'
 
     sex = models.CharField(max_length=1, choices=SEX)
-    birth_year = models.DateTimeField()
+    birth_date = models.DateTimeField()
 
     class Meta:
         verbose_name = 'user'

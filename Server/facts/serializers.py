@@ -11,5 +11,6 @@ class FactSerializer(serializers.ModelSerializer):
             'goal', 'target', 'indicator', 'series', 'source',
             'data', 'min_year', 'max_year', 'oldest_year', 'newest_year',
             'unit', 'unit_parsed', 'content', 'fact_type',
+            'love', 'alert', 'edu', 'sad',
         )
         ordering = ('custom_order',)

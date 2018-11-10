@@ -5,7 +5,10 @@
       <nav class="level main-nav container">
         <div class="level-left standard-padding">
           <div class="level-item is-size-4 has-text-weight-bold">
-            <p>9GUS</p>
+            <a class="has-text-white" href="/">9GUS</a>
+          </div>
+          <div class="level-item is-size-5" style="margin-left: 10px">
+            <a class="has-text-white" href="/random">Random facts</a>
           </div>
         </div>
         <div class="level-right standard-padding">
@@ -17,12 +20,12 @@
           </div>
           <div class="level-item" v-else>
             <a class="button log-in-button" :href="loginUrl">LOG IN</a>
-            <a class="button sign-up-button is-danger has-text-weight-bold" :href="signupUrl">SIGN UP</a>
+            <a class="button sign-up-button is-link has-text-weight-bold" :href="signupUrl">SIGN UP</a>
           </div>
         </div>
       </nav>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 <script>
@@ -108,6 +111,17 @@ export default {
   },
   mounted: function() {
     let self = this;
+    axios
+      .get(`${this.apiUrl}/accounts/me`)
+      .then(function(response) {
+        console.log(response.data);
+        self.user = response.data.username;
+      })
+      .catch(function(error) {
+        console.log(error);
+        self.user = null;
+      });
+
     axios
       .get(`${this.apiUrl}/accounts/me`)
       .then(function(response) {

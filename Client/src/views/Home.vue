@@ -1,13 +1,12 @@
 <template>
   <div>
-    <section class="hero has-background-white-ter main-hero">
+    <section class="hero has-background-grey-darker main-hero">
       <div class="hero-body">
         <div class="container display-option-container">
           <div class="filter-container">
             <div class="level">
               <div class="level-item">
-                <h2 class="subtitle">FILTER BY CATEGORY</h2>
-
+                <p class="subtitle has-text-white is-size-4">FILTER BY CATEGORY <i v-if="filterCategorie != null" class="mdi mdi-24px mdi-close has-text-danger" @click="filterCategorie = null"></i></p>
               </div>
             </div>
             <div class="categories-container">
@@ -17,7 +16,7 @@
           <div class="sort-container">
             <div class="level">
               <div class="level-item ">
-                <h2 class="subtitle has-text-right">SORT BY</h2>
+                <h2 class="subtitle has-text-right has-text-white is-size-4">SORT BY</h2>
               </div>
             </div>
             <div style="width: 100%">
@@ -31,18 +30,16 @@
 
             <div class="level" style="margin-top: 32px">
               <div class="level-item ">
-                <h2 class="subtitle has-text-right">FACT TYPE</h2>
+                <h2 class="subtitle has-text-right has-text-white is-size-4">FACT TYPE</h2>
               </div>
             </div>
             <div style="width: 100%">
               <div class="buttons has-addons is-centered">
-                <div class="select">
-                  <select>
-                    <option>All</option>
-                    <option>Milestone</option>
-                    <option>High vs Low</option>
-                    <option>Progress</option>
-                    <option>Charts</option>
+                <div class="select is-size-5">
+                  <select v-model="type">
+                    <option class="is-size-5">All</option>
+                    <option class="is-size-5">One data point</option>
+                    <option class="is-size-5">New vs Old</option>
                   </select>
                 </div>
               </div>
@@ -51,7 +48,7 @@
         </div>
       </div>
     </section>
-    <div class="container">
+    <div class="container facts-container">
       <Fact v-for="fact in facts" :fact="fact" v-bind:key="fact.content" />
     </div>
   </div>
@@ -74,67 +71,21 @@ export default {
       signupUrl: "/accounts/signup",
       categories: Array.from(new Array(17), (x, i) => ({ id: i })),
       filterCategorie: null,
-      facts: [
-        {
-          content: "Szotuka była dyscypliną olimpijską od 1912 do 1948 roku",
-          category: 1
-        },
-        {
-          content:
-            "10% ze wszystkich zdjęć istniejących na świecie zostało zrobione w ciągu ostatnich 12 miesięcy",
-          category: 2
-        },
-        {
-          content:
-            "Co 10 mieszkaniec Centralnej Azji jest potomkiem Czyngis-chana",
-          category: 1
-        },
-        {
-          content:
-            "W pewnej austriackiej wiosce znaki drogowe zrobione są z cementu, by zapobiec kradzieży",
-          category: 3
-        },
-        {
-          content:
-            "Istnieje trzy razy większe ryzyko, że umrzemy w katastrofie lotniczej, niż zostaniemy zaatakowani przez pumę",
-          category: 1
-        },
-        {
-          content:
-            "Jeśli rocznie zarabiasz więcej niż 64.000 złotych to należysz do 4% najbogatszych ludzi na świecie",
-          category: 2
-        },
-        {
-          content:
-            "Kiedy „Mona Liza” została ukradziona z Luwru w 1911 roku, jednym z podejrzanych był Pablo Picasso",
-          category: 4
-        },
-        {
-          content:
-            "W dniu urodzin ryzyko śmierci jest 14% większe niż w jakikolwiek inny dzień",
-          category: 3
-        },
-        {
-          content:
-            "W książce Jerome K. Jerome „Trzech panów w łódce” pierwsze zdanie brzmi „Było nas czterech",
-          category: 1
-        },
-        {
-          content:
-            "Ponad 7000 osób umiera, a 1.5 miliona ma problemy zdrowotne spowodowane nieczytelnym pismem lekarzy",
-          category: 2
-        },
-        { content: "Większość diamentów ma ponad 3 miliardy lat", category: 4 },
-        {
-          content: "Co 10 dziecko w Europie zostało poczęte w łóżku z IKEA",
-          category: 3
-        }
-      ]
+      facts: [],
+      type: "All"
     };
   },
   computed: {
     apiUrl: function() {
       return config.apiUrl;
+    }
+  },
+  watch: {
+    filterCategorie: function(old_value, new_value) {
+      this.getFacts();
+    },
+    type: function(old_value, new_value) {
+      this.getFacts();
     }
   },
   mounted: function() {
@@ -149,10 +100,41 @@ export default {
         console.log(error);
         self.user = null;
       });
+
+    this.getFacts();
   },
   methods: {
     getImageUrl: function(i) {
       return getImageUrl(i);
+    },
+    getFacts: function() {
+      let self = this;
+
+      let params = {
+        params: {
+          page: 1
+        }
+      };
+      if (this.filterCategorie != null) {
+        params.params.goal = this.filterCategorie + 1;
+      }
+      if (this.type != "All") {
+        if (this.type == "One data point") {
+          params.params.fact_type = "one_point";
+        } else if (this.type == "New vs Old") {
+          params.params.fact_type = "new_old";
+        }
+      }
+      axios
+        .get(`${this.apiUrl}/api/facts/`, params)
+        .then(function(response) {
+          console.log(response.data);
+          self.facts = response.data.results;
+        })
+        .catch(function(error) {
+          console.log("facts");
+          console.log(error);
+        });
     }
   }
 };
@@ -187,14 +169,14 @@ export default {
 }
 
 .category-pick-image {
-  height: 90px;
+  height: 100px;
   margin: 0px;
 }
 
 .category-pick-image:hover {
   height: 140px;
   position: relative;
-  margin: -25px;
+  margin: -20px;
   -webkit-filter: none;
   -moz-filter: none;
   -o-filter: none;
@@ -238,5 +220,9 @@ export default {
 .display-option-container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.container {
+  max-width: 1000px !important;
 }
 </style>

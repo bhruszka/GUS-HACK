@@ -32,6 +32,11 @@ class Fact(CommonModel):
 
     fact_type = models.CharField(max_length=10, choices=FACT_TYPES, default='one_point')
 
+    love = models.IntegerField(default=0)
+    sad = models.IntegerField(default=0)
+    alert = models.IntegerField(default=0)
+    edu = models.IntegerField(default=0)
+
     @property
     def target_model(self):
         return Target.objects.get(code=self.target)

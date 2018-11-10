@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'core',
     'sdg_api',
     'facts',
+    'django_filters',
     'rest_framework',
     'rest_framework_swagger',
     'django_extensions',
@@ -167,7 +168,8 @@ REST_FRAMEWORK = {
     ),
     'DATETIME_FORMAT': "%Y-%m-%d %H:%M",
     'DEFAULT_PAGINATION_CLASS': 'facts.utils.PaginationWithPageCount',
-    'PAGE_SIZE': 20
+    'PAGE_SIZE': 20,
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 }
 
 SHELL_PLUS_SUBCLASSES_IMPORT = [
